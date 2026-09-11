@@ -26,8 +26,9 @@ placeholder (there is a comment above it with the exact `<img>` tag to paste).
 
 ## Gallery
 
-Haircut photos for **gallery.html** go in [`gallery/`](gallery/) - see the
-README in that folder. They load automatically.
+Haircut photos for **gallery.html** live in [`gallery/`](gallery/), named
+`1.jpg`, `2.jpg`, `3.jpg` ... They load automatically in a masonry layout (any
+shape works). See the README in that folder to add or reorder them.
 
 ## Tips
 

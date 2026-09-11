@@ -652,12 +652,23 @@ p:last-child { margin-bottom: 0; }
 
 /* =========================================================================
    GALLERY  (gallery.html)
+   Balanced masonry: gallery.js drops each photo into the shortest column,
+   so portrait and landscape shots both show whole and the columns stay even.
    ========================================================================= */
 .gallery-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: clamp(0.75rem, 2vw, 1.25rem);
+  --gallery-gap: clamp(0.75rem, 2vw, 1.25rem);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--gallery-gap);
   margin-top: clamp(2rem, 5vw, 3rem);
+}
+
+.gallery-col {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gallery-gap);
 }
 
 .gallery-item {
@@ -669,12 +680,11 @@ p:last-child { margin-bottom: 0; }
   transition: box-shadow 0.16s var(--ease);
 }
 .gallery-item:hover { box-shadow: var(--shadow-md); }
-.gallery-item a { display: block; }
+.gallery-item a { display: block; font-size: 0; }
 
 .gallery-img {
   width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
+  height: auto;
   background: var(--paper-alt);
 }
 
@@ -684,19 +694,16 @@ p:last-child { margin-bottom: 0; }
   font-size: 1.05rem;
 }
 
-@media (min-width: 560px) {
-  .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-@media (min-width: 900px) {
-  .gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
+/* No-JS fallback: gallery.js normally builds the columns. */
+.gallery-grid:not(:has(.gallery-col)) { display: block; }
+.gallery-grid:not(:has(.gallery-col)) .gallery-item { margin-bottom: var(--gallery-gap); }
 
 /* =========================================================================
    RESPONSIVE
    ========================================================================= */
 @media (min-width: 620px) {
   .info-strip-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .footer-grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr); align-items: start; }
+  .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
 }
 
 @media (min-width: 900px) {
@@ -705,7 +712,11 @@ p:last-child { margin-bottom: 0; }
   .about-grid { grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); }
   .about-photo { position: sticky; top: 100px; }
   .visit-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 4rem; }
+  .footer-grid { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr); }
 }
+
+/* Long email/phone links in the footer must never force a sideways scroll. */
+.footer-col a { overflow-wrap: anywhere; }
 
 /* Desktop nav vs mobile drawer */
 @media (max-width: 899px) {
