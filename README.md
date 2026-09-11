@@ -1,129 +1,100 @@
-# Maverick Men's Grooming Center — website
+# Maverick Men's Grooming Center - website (developer notes)
 
-Website for the barbershop at 1 South Main Street, Natick Center, MA.
+> Not a developer? Open **OWNER-GUIDE.md** instead. It covers changing prices,
+> hours, photos, and publishing, in plain language.
 
-Plain HTML, CSS, and JavaScript — **no build step, no framework, no npm.**
-Open `index.html` in a browser and it works. Host it anywhere for free.
+Static site. Plain HTML, CSS, and vanilla JS. No build step, no framework, no
+npm, no server. Open `index.html` in a browser and it runs.
+
+## Files
 
 ```
-Maverick Website/
-├── index.html          ← home page: all the main content
-├── gallery.html        ← photo gallery of recent haircuts
-├── css/styles.css      ← all styling
-├── js/main.js          ← menu toggle, "today" highlight, small touches
-├── js/gallery.js       ← auto-loads photos onto gallery.html
-├── favicon.svg         ← browser-tab icon
-├── images/             ← photos (see images/README.md)
-│   └── gallery/        ← haircut photos for gallery.html (see its README)
-└── README.md           ← this file
+index.html          Home page. All the main content and the JSON-LD block.
+gallery.html         Photo gallery. Header/footer duplicated from index.html;
+                     its nav links point back to index.html#section.
+css/styles.css       Everything. Design tokens at the top of the file.
+js/main.js           Nav toggle, sticky-header hairline, "today" hours row,
+                     footer year. All null-guarded so it is safe on any page.
+js/gallery.js        Builds the gallery (see below).
+favicon.svg          Tab icon.
+images/
+  storefront.jpg       Home hero. 576x1024, CSS-cropped to 3:4.
+  daniel-at-work.png   Home "About". 402x314, CSS-cropped to 4:3.
+  team-daniel.jpg      Placeholder - not added yet.
+  team-greg.jpg        Placeholder - not added yet.
+  og-image.jpg         Not added. og:image currently points at storefront.jpg.
+  gallery/1.jpg..12.jpg  Gallery photos, numbered.
+OWNER-GUIDE.md       Plain-language guide for the shop.
 ```
 
----
+## CSS
 
-## 1. Preview it locally
+- Design tokens (colour, spacing, shadow, easing) are CSS custom properties on
+  `:root` at the top of `styles.css`. Change the palette there.
+- Palette: warm bone paper, warm near-black ink, one oxblood accent (`--accent`).
+- Type: Barlow Condensed (display) + Source Serif 4 (body), from Google Fonts.
+- Layout primitives: `.wrap` (max-width + gutter), `.section` (vertical rhythm +
+  top hairline), `.frame` (padded card around photos and iframes), `.btn`
+  (`.btn-accent` / `.btn-outline` / `.btn-on-dark`, plus `.btn-sm`).
+- Breakpoints in use: 460, 560, 620, 900, 980 px. All grids use
+  `minmax(0, 1fr)` to stay blowout-proof. `body` has `overflow-x: hidden` as a
+  backstop.
+- Footer grid: 1 col, then 2 at 620, then 4 at 900. It went 4-up too early once
+  and the email address forced a sideways scroll around 700 px; keep it 2-up
+  until there is room for the address.
 
-Just double-click `index.html`. That's it. The Gallery link opens `gallery.html`.
+## Gallery (`js/gallery.js`)
 
-The booking window and the map load from the internet, so those need a
-connection to appear.
+- Probes `images/gallery/1`, `2`, `3` ... trying extensions `jpg, jpeg, png,
+  webp`. Stops after 4 consecutive missing numbers (`STOP_AFTER_MISSES`).
+- Reuses the probe `Image` object in the DOM, so each photo downloads once.
+- Layout is a JS masonry: 1 / 2 / 3 columns at 560 / 980 px, and each photo goes
+  into whichever column is currently shortest (estimated from aspect ratio, no
+  DOM measurement). Re-runs on resize.
+- No manifest to maintain. To add photos, drop in `13.jpg`, `14.jpg` ...
+- Current set: `1`-`10` finished cuts (portrait), `11`-`12` action shots
+  (landscape). Several sources are only 225x300 and look soft enlarged; ask the
+  shop for full-res versions if it bothers you.
+- Images were normalised with Pillow: `ImageOps.exif_transpose`, long edge
+  capped at 1400, re-saved q85 progressive.
 
----
+## Booking
 
-## 2. Edit the content
-
-Everything a non-developer needs to change lives in **`index.html`** as plain
-text. Open it in any editor (even TextEdit / Notepad) and search for the words
-you want to change.
-
-| To change…              | Search `index.html` for | Also update                              |
-|-------------------------|-------------------------|------------------------------------------|
-| A service or price      | `class="menu"`          | The `hasOfferCatalog` block near the top  |
-| Hours                   | `hours-table`           | `.info-strip`, the footer, and `openingHoursSpecification` near the top |
-| Phone number            | `474-3492`              | Appears in several places — replace all. Also `+1-910-474-3492` in the structured-data block |
-| Email                   | `bostonshaves@gmail.com`| —                                         |
-| Address                 | `South Main Street`     | Footer + `PostalAddress` block            |
-| Team members            | `class="team-grid"`     | —                                         |
-| Booking link            | `book.daysmart.com`     | Appears 3×: the embedded iframe, the "open in a new tab" fallback, and the `potentialAction` in the structured data |
-
-> **Heads-up on the phone number:** the site uses **(910) 474-3492**, the number
-> you provided. A local news write-up listed **508-545-1141**. If the public
-> number should be the 508 one, do a find-and-replace before publishing.
-
-### Adding photos
-
-- **Home page photos** (storefront, About, team): see
-  [`images/README.md`](images/README.md).
-- **Gallery photos** (recent haircuts): drop numbered files —
-  `1.jpg`, `2.jpg`, `3.jpg` … — into `images/gallery/`. They appear on
-  `gallery.html` automatically. Details in
-  [`images/gallery/README.md`](images/gallery/README.md).
-
----
-
-## 3. Publish it for free
-
-Pick **one**. All three are free and support a custom domain
-(e.g. `maverickmgc.com`) later.
-
-### Option A — Cloudflare Pages (drag & drop, no account juggling)
-
-1. Go to <https://pages.cloudflare.com> and sign up (free).
-2. **Create a project → Direct Upload.**
-3. Drag the whole `Maverick Website` folder onto the page.
-4. Done — you get a `something.pages.dev` address immediately.
-5. To update later: repeat the upload, or connect a GitHub repo.
-
-### Option B — Netlify (drag & drop)
-
-1. Go to <https://app.netlify.com/drop>.
-2. Drag the `Maverick Website` folder onto the drop zone.
-3. You get a live URL right away. Create a free account to keep it and add a
-   custom domain.
-
-### Option C — GitHub Pages (best if you'll use GitHub anyway)
-
-1. Create a free GitHub account and a new **public** repository.
-2. Upload all the files (keep the folder structure).
-3. Repo **Settings → Pages → Build and deployment → Source: Deploy from a
-   branch**, branch `main`, folder `/ (root)`, **Save**.
-4. Your site appears at `https://<username>.github.io/<repo>/` in a minute or two.
-
-### Custom domain
-
-Once the site is live on any of the above, buy the domain (e.g. from Cloudflare
-Registrar or Namecheap) and follow that host's "Add a custom domain" guide —
-it's a couple of DNS records. Then update `https://maverickmgc.com/` in the
-`<link rel="canonical">` and `og:url` tags in `index.html`.
-
----
-
-## 4. About the embedded booking
-
-The **Book** section embeds DaySmart's modern booking page directly:
+Embed URL (in `index.html` x3: the `<iframe src>`, the "open in a new tab"
+fallback link, and the JSON-LD `potentialAction` `urlTemplate`):
 
 ```
 https://book.daysmart.com/booking/service?DSID=DC-2291947
 ```
 
-Visitors book without leaving the site. This is a different URL from the old
-`maverickmgc.myonlineappointment.com` one, which forces a "you are leaving this
-site" prompt and does not work inside an embed — do not use that one.
+Do **not** use `maverickmgc.myonlineappointment.com`. It redirects through a
+session check, needs third-party cookies (fails in an iframe on Safari/iOS), and
+shows a "you are leaving this site" prompt. `book.daysmart.com` embeds cleanly.
 
-If DaySmart ever changes your booking address, update it in three places in
-`index.html`: the `<iframe src="…">`, the "Open it in a new tab" link just below
-it, and the `urlTemplate` inside the `potentialAction` block near the top.
+## Local preview and screenshots
 
-The "Book Appointment" buttons in the header and footer, and the "Book a chair
-below" line in the hero, all scroll down to this section.
+- Preview: double-click `index.html`. The booking iframe and the map need an
+  internet connection.
+- Headless Chrome `--window-size` below ~500 px is unreliable on this machine
+  (it clamps the window and crops the screenshot, which looks like overflow when
+  the layout is fine). For real phone widths, drive Chrome over the DevTools
+  Protocol with `Emulation.setDeviceMetricsOverride` (`mobile: true`). Launch
+  Chrome with `--remote-allow-origins=*`.
+- `pip install pillow websocket-client` if the screenshot scripts need it.
 
----
+## Loose ends
 
-## 5. Notes on the design
+- **Phone number:** the site now uses **508-545-1141** (matches the storefront
+  door and the Natick Report piece). The old (910) number is gone.
+- `og-image.jpg`: add a 1200x630 image and repoint `og:image` for nicer link
+  previews. Right now it uses the portrait `storefront.jpg`.
+- Team headshots (`team-daniel.jpg`, `team-greg.jpg`) are still placeholder
+  blocks in the About section.
+- `<link rel="canonical">` and `og:url` use `https://maverickmgc.com/`. Update
+  them when the real domain is live.
 
-- **Type:** Barlow Condensed (headlines) + Source Serif 4 (text), loaded from
-  Google Fonts.
-- **Colour:** warm bone paper, warm near-black ink, one oxblood accent. Defined
-  once as CSS variables at the top of `styles.css` — change them there and the
-  whole site follows.
-- Fully responsive; tested down to ~360 px wide.
-- Respects "reduce motion" system settings.
+## Publishing
+
+See the "Publish" section of **OWNER-GUIDE.md** for step-by-step host setup
+(Cloudflare Pages, Netlify, or GitHub Pages). Any static host works; upload the
+folder as-is.
