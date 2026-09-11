@@ -1,17 +1,20 @@
 # Maverick Men's Grooming Center — website
 
-A single-page website for the barbershop at 1 South Main Street, Natick Center, MA.
+Website for the barbershop at 1 South Main Street, Natick Center, MA.
 
 Plain HTML, CSS, and JavaScript — **no build step, no framework, no npm.**
 Open `index.html` in a browser and it works. Host it anywhere for free.
 
 ```
 Maverick Website/
-├── index.html          ← all the content and page structure
+├── index.html          ← home page: all the main content
+├── gallery.html        ← photo gallery of recent haircuts
 ├── css/styles.css      ← all styling
 ├── js/main.js          ← menu toggle, "today" highlight, small touches
+├── js/gallery.js       ← auto-loads photos onto gallery.html
 ├── favicon.svg         ← browser-tab icon
-├── images/             ← put real photos here (see images/README.md)
+├── images/             ← photos (see images/README.md)
+│   └── gallery/        ← haircut photos for gallery.html (see its README)
 └── README.md           ← this file
 ```
 
@@ -19,7 +22,7 @@ Maverick Website/
 
 ## 1. Preview it locally
 
-Just double-click `index.html`. That's it.
+Just double-click `index.html`. That's it. The Gallery link opens `gallery.html`.
 
 The booking window and the map load from the internet, so those need a
 connection to appear.
@@ -48,8 +51,12 @@ you want to change.
 
 ### Adding photos
 
-See [`images/README.md`](images/README.md). Each placeholder in `index.html` has
-a comment directly above it with the exact `<img>` tag to paste in.
+- **Home page photos** (storefront, About, team): see
+  [`images/README.md`](images/README.md).
+- **Gallery photos** (recent haircuts): drop numbered files —
+  `1.jpg`, `2.jpg`, `3.jpg` … — into `images/gallery/`. They appear on
+  `gallery.html` automatically. Details in
+  [`images/gallery/README.md`](images/gallery/README.md).
 
 ---
 
