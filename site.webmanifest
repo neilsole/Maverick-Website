@@ -1,0 +1,15 @@
+{
+  "name": "Maverick Men's Grooming Center",
+  "short_name": "Maverick MGC",
+  "description": "Barbershop in Natick Center, MA. Haircuts, beard trims, and neck shaves for men and kids.",
+  "start_url": "/index.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f4f0e7",
+  "theme_color": "#1c1a17",
+  "lang": "en-US",
+  "icons": [
+    { "src": "images/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "images/icons/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

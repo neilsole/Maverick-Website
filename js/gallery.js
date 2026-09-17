@@ -88,7 +88,7 @@
 
   var laidOutCols = 0;
 
-  function buildItem(hit) {
+  function buildItem(hit, n) {
     var fig = document.createElement("figure");
     fig.className = "gallery-item";
 
@@ -101,7 +101,9 @@
     img.className = "gallery-img";
     img.loading = "lazy";
     img.decoding = "async";
-    img.alt = "Haircut by Maverick Men's Grooming Center";
+    // Each photo gets a distinct alt (not just repeated identical text) so
+    // screen-reader and search users can tell the images apart.
+    img.alt = "Haircut example " + n + " from Maverick Men's Grooming Center";
     if (img.naturalWidth) {
       img.setAttribute("width", img.naturalWidth);
       img.setAttribute("height", img.naturalHeight);
@@ -139,7 +141,7 @@
     var placed = grid.querySelectorAll(".gallery-item").length;
     for (var h = placed; h < hits.length; h++) {
       var shortest = heights.indexOf(Math.min.apply(null, heights));
-      var item = buildItem(hits[h]);
+      var item = buildItem(hits[h], h + 1);
       boxes[shortest].appendChild(item);
       heights[shortest] += ratioHeight(item.querySelector(".gallery-img"));
     }

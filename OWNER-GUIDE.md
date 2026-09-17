@@ -69,22 +69,21 @@ words.
 
 ### Phone number
 
-The number appears six times, in two forms. Use your editor's **Replace All**
-(usually Ctrl+H):
+The number appears many times, in two forms, and now across **every** `.html`
+file in the folder (`index.html`, `gallery.html`, `privacy.html`, `terms.html`,
+`404.html`). Use your editor's **Replace All** (usually Ctrl+H) and run it once
+per file, or use a "replace in all files" option if your editor has one:
 
 | Find | Replace with |
 |---|---|
 | `(508) 545-1141` | your new number, same style, e.g. `(508) 555-0000` |
 | `+15085451141` | `+1` then your number with no spaces, dashes, or brackets: `+15085550000` |
-| `+1-508-545-1141` | `+1-508-555-0000` (this one is in the Google block near the top) |
-
-Do the same **Replace All** in `gallery.html` (the visible number and the
-`+1...` link both appear once there).
+| `+1-508-545-1141` | `+1-508-555-0000` (this one is in the Google block near the top of `index.html`) |
 
 ### Email
 
-Search `bostonshaves@gmail.com` in both `index.html` and `gallery.html` and
-change it everywhere it appears.
+Search `bostonshaves@gmail.com` and change it everywhere it appears. It shows
+up in `index.html`, `gallery.html`, `privacy.html`, `terms.html`, and `404.html`.
 
 ### The welcome text and the "About" paragraph
 
@@ -137,7 +136,16 @@ gives you a new booking web address, open `index.html` and search for
 `book.daysmart.com`. Replace the address in all three places you find it. Then
 you are done.
 
-## 6. Publish your changes to the live site
+## 6. Legal pages (Privacy Policy & Terms)
+
+Two extra pages, `privacy.html` and `terms.html`, are linked at the very
+bottom of every page's footer. They're plain text, edited the same way as
+anything else here (open, find the words, type over them). If a lawyer ever
+gives you replacement wording, you can paste it over the paragraphs in those
+two files. There's also a `404.html` page people land on if a link is
+mistyped or broken — usually nothing to touch there.
+
+## 7. Publish your changes to the live site
 
 Your developer set up one of these when the site went live. Use whichever one
 they told you.
@@ -156,7 +164,7 @@ they told you.
    Summary box and click "Commit to main".
 3. Click "Push origin". The live site updates in a minute or two.
 
-## 7. If something looks wrong
+## 8. If something looks wrong
 
 - The **live website is unchanged** until you upload. Take your time.
 - In your editor, **Ctrl+Z** undoes your last changes.
@@ -165,15 +173,19 @@ they told you.
 - Refresh the browser with **Ctrl+Shift+R** to make sure you are not seeing an
   old cached version.
 
-## 8. What not to touch
+## 9. What not to touch
 
 - The **`css`** and **`js`** folders. That is the layout and the behaviour.
 - Anything inside angle brackets like `<span class="...">`. Edit the words
   between the brackets, not the brackets themselves.
 - The `application/ld+json` block near the top of `index.html`, unless you are
   deliberately updating your Google listing info.
+- `robots.txt`, `sitemap.xml`, `site.webmanifest`, `favicon.ico`, `favicon.svg`,
+  and the `images/icons` folder. These are quiet technical files for search
+  engines and browser tabs/home-screen icons — nothing on the page changes if
+  you leave them alone. Only touch `sitemap.xml` if your domain name changes.
 
-## 9. Help
+## 10. Help
 
 Call your developer. Tell them which file you changed and what you were trying to
 do. If you can, send them the folder so they can see exactly what you see.

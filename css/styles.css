@@ -14,7 +14,7 @@
   --card:        #faf7f0;   /* raised surfaces */
   --ink:         #1f1c18;   /* primary text — warm near-black */
   --ink-soft:    #55504a;   /* secondary text */
-  --ink-faint:   #8a8279;   /* captions, meta */
+  --ink-faint:   #6a635c;   /* captions, meta — darkened from #8a8279 for WCAG AA contrast (4.5:1) on paper */
   --line:        #d9d0c0;   /* hairlines on paper */
   --line-strong: #c3b8a4;
   --accent:      #6f2b22;   /* oxblood */
@@ -103,6 +103,9 @@ p:last-child { margin-bottom: 0; }
 .section--alt { background: var(--paper-alt); }
 
 .section-head { max-width: 44rem; margin-bottom: clamp(2rem, 5vw, 3rem); }
+/* Pages with no hero (gallery, legal, 404) use a real <h1> as their one page
+   heading, sized to match the section h2's elsewhere so it looks the same. */
+.section-head h1 { font-size: clamp(2rem, 4.4vw, 3rem); text-transform: uppercase; letter-spacing: 0.01em; }
 .section-intro { color: var(--ink-soft); font-size: 1.15rem; margin-top: 0.9rem; }
 .section-head-cta { margin-top: 1.6rem; }
 .section-foot { margin-top: clamp(2rem, 5vw, 3rem); }
@@ -649,6 +652,24 @@ p:last-child { margin-bottom: 0; }
   color: var(--on-panel-faint);
   letter-spacing: 0.02em;
 }
+
+/* =========================================================================
+   LEGAL CONTENT  (privacy.html, terms.html)
+   ========================================================================= */
+.legal-content { max-width: 42rem; }
+.legal-content h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.7rem;
+}
+.legal-content h3:first-child { margin-top: 0; }
+.legal-content p { color: var(--ink-soft); }
+.legal-content ul {
+  margin: 0 0 1.1rem;
+  padding-left: 1.25rem;
+  color: var(--ink-soft);
+}
+.legal-content li { margin-bottom: 0.4rem; }
+.legal-content a { color: var(--accent); }
 
 /* =========================================================================
    GALLERY  (gallery.html)
