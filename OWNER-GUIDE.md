@@ -51,12 +51,16 @@ it there as well. Otherwise you can skip it.
 
 ### Hours
 
-Hours appear in **three** spots. Change all three so they match:
+Hours appear in a few spots, all in `index.html` except the footer line, which
+is repeated at the bottom of every page. Change them all so they match:
 
-1. Search `9:00 am` - this is the full hours table further down the page.
-2. Search `Wed` - the first match is the short line under the welcome
-   (`Wed-Fri 9-6 ...`).
-3. Search `Wed` again - the next match is the footer at the bottom.
+1. In `index.html`, search `9:00 am` - this is the full hours table further
+   down the page (one row per day, `Closed` for the days you're not open).
+2. In `index.html`, search `Tue` - the first match is the short line under the
+   welcome (`Tue-Fri 9-6 ...`).
+3. Search `Tue` again in `index.html`, and the same text in `gallery.html`,
+   `privacy.html`, `terms.html`, and `404.html` - that's the footer line
+   (`Tue-Fri: 9 am - 6 pm ...`), and it needs to match on every page.
 
 You may see `&ndash;` in the text. That is just a dash. Leave it, or replace it
 with a plain `-`. Both work.
