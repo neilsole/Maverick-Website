@@ -17,9 +17,9 @@
   --ink-faint:   #6a635c;   /* captions, meta — darkened from #8a8279 for WCAG AA contrast (4.5:1) on paper */
   --line:        #d9d0c0;   /* hairlines on paper */
   --line-strong: #c3b8a4;
-  --accent:      #6f2b22;   /* oxblood */
-  --accent-deep: #571f18;
-  --accent-tint: #f0e2df;
+  --accent:      #8e07ed;   /* brand purple, sampled from the logo/business card and darkened ~2% for WCAG AA on paper-alt */
+  --accent-deep: #6a05b1;
+  --accent-tint: #efe4f6;
 
   --ink-panel:   #1c1a17;   /* dark bands (info strip, footer) */
   --on-panel:    #e9e2d4;
@@ -231,7 +231,7 @@ p:last-child { margin-bottom: 0; }
   background-color: var(--paper-alt);
   background-image:
     repeating-linear-gradient(-45deg,
-      rgba(111, 43, 34, 0.06) 0 1px,
+      rgba(142, 7, 237, 0.06) 0 1px,
       transparent 1px 11px);
   color: var(--ink-faint);
   text-align: center;

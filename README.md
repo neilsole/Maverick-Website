@@ -20,17 +20,21 @@ css/styles.css       Everything. Design tokens at the top of the file.
 js/main.js           Nav toggle, sticky-header hairline, "today" hours row,
                      footer year. All null-guarded so it is safe on any page.
 js/gallery.js        Builds the gallery (see below).
-favicon.svg          Tab icon (source of truth - the PNGs below are rendered
-                     from it).
 favicon.ico          16/32/48 multi-res fallback for old browsers/crawlers.
 site.webmanifest     Name, theme colour, icons for "Add to Home Screen".
 robots.txt           Allows all crawlers, points at sitemap.xml.
 sitemap.xml          Lists the 4 real pages. Update if the domain changes.
+MGC_logo.jpg         The client's real "MGC" monogram (purple/black on white).
+                     Source of truth for every icon in images/icons/ - see
+                     "Favicon / brand mark" below before touching those.
+business card.jpeg   Reference photo of the client's printed business card
+                     (dark bg, glow purple monogram, barber pole). Used to
+                     source the brand purple; not used on the site itself.
 images/
   icons/               favicon-16.png, favicon-32.png, apple-touch-icon.png
-                       (180x180), icon-192.png, icon-512.png. All rendered
-                       from favicon.svg - regenerate from that file, don't
-                       hand-edit these.
+                       (180x180), icon-192.png, icon-512.png. Rendered from
+                       MGC_logo.jpg - regenerate from that file if it changes,
+                       don't hand-edit these.
   storefront.jpg       Home hero. 576x1024, CSS-cropped to 3:4.
   daniel-at-work.png   Home "About". 402x314, CSS-cropped to 4:3.
   team-daniel.jpg      Placeholder - not added yet.
@@ -40,11 +44,35 @@ images/
 OWNER-GUIDE.md       Plain-language guide for the shop.
 ```
 
+## Favicon / brand mark
+
+The browser-tab icon and every size in `images/icons/` are rendered straight
+from `MGC_logo.jpg` (the client's real monogram), not hand-drawn. To
+regenerate after a logo update:
+
+1. Chroma-key the white background out of the logo into a transparent cutout
+   (anything darker than ~lum 225 is kept opaque, anything lighter than
+   ~lum 248 is dropped, with a soft ramp between so edges stay smooth - see
+   the commit that introduced this for the exact script).
+2. Composite that cutout, centered, onto a square canvas in `--paper`
+   (`#f4f0e7`) so there's no visible seam around the old white background.
+3. Downscale that master to 16, 32, 48 (for `favicon.ico`), 180 (Apple), 192,
+   and 512 px with Lanczos resampling, save into `images/icons/`.
+4. Rebuild `favicon.ico` from the 16/32/48 PNGs (`Image.save(..., format="ICO",
+   sizes=[(16,16),(32,32),(48,48)])` in Pillow).
+
+There's no `favicon.svg` anymore - a detailed multi-letter monogram doesn't
+simplify to a clean tiny vector mark, so this is a plain ICO + PNG set instead
+(completely standard, no downside).
+
 ## CSS
 
 - Design tokens (colour, spacing, shadow, easing) are CSS custom properties on
   `:root` at the top of `styles.css`. Change the palette there.
-- Palette: warm bone paper, warm near-black ink, one oxblood accent (`--accent`).
+- Palette: warm bone paper, warm near-black ink, one purple accent (`--accent`,
+  `#8e07ed`) sampled from the client's real logo/business card and darkened
+  ~2% off the raw `#9810f8` so it clears WCAG AA (4.5:1) on `--paper-alt` too,
+  not just `--paper`. `--accent-deep` is the hover/pressed shade.
 - Type: Barlow Condensed (display) + Source Serif 4 (body), from Google Fonts.
 - Layout primitives: `.wrap` (max-width + gutter), `.section` (vertical rhythm +
   top hairline), `.frame` (padded card around photos and iframes), `.btn`
@@ -133,10 +161,10 @@ file - the styling is already there.
   blocks in the About section.
 - `<link rel="canonical">`, `og:url`, `robots.txt`, and `sitemap.xml` all use
   `https://maverickmgc.com/`. Update all four when the real domain is live.
-- `favicon.svg` is the source of truth for every icon. If you change it,
-  regenerate `favicon.ico` and everything in `images/icons/` from it (headless
-  Chrome screenshot at each pixel size, or any SVG-to-PNG tool) rather than
-  editing the PNGs by hand.
+- `MGC_logo.jpg` is the source of truth for every icon (see "Favicon / brand
+  mark" above). If the client sends a new logo file, regenerate
+  `favicon.ico` and everything in `images/icons/` from it rather than editing
+  the PNGs by hand.
 
 ## Publishing
 

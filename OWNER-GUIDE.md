@@ -184,7 +184,7 @@ they told you.
   between the brackets, not the brackets themselves.
 - The `application/ld+json` block near the top of `index.html`, unless you are
   deliberately updating your Google listing info.
-- `robots.txt`, `sitemap.xml`, `site.webmanifest`, `favicon.ico`, `favicon.svg`,
+- `robots.txt`, `sitemap.xml`, `site.webmanifest`, `favicon.ico`,
   and the `images/icons` folder. These are quiet technical files for search
   engines and browser tabs/home-screen icons — nothing on the page changes if
   you leave them alone. Only touch `sitemap.xml` if your domain name changes.
