@@ -389,6 +389,15 @@ p:last-child { margin-bottom: 0; }
   gap: 0.9rem;
   margin-top: 2rem;
 }
+.trust-note {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 1.1rem 0 0;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+}
+.trust-icon { flex: none; color: var(--accent); }
 .hero-photo { max-width: 460px; margin-inline: auto; }
 .hero-photo .photo-ph { aspect-ratio: 4 / 5; }
 /* The storefront photo is a tall phone shot; crop it to a calmer portrait
