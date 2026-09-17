@@ -555,11 +555,13 @@ p:last-child { margin-bottom: 0; }
   border: 0;
   background: var(--card);
 }
-.booking-fallback {
+.booking-notes {
   margin-top: 1rem;
   font-size: 0.95rem;
   color: var(--ink-faint);
 }
+.booking-notes p { margin: 0 0 0.5rem; }
+.booking-notes p:last-child { margin-bottom: 0; }
 
 /* =========================================================================
    VISIT
