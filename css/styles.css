@@ -662,6 +662,16 @@ p:last-child { margin-bottom: 0; }
   color: var(--on-panel-faint);
   letter-spacing: 0.02em;
 }
+/* Privacy/Terms links here sit on the dark footer, not paper - the global
+   `a { color: var(--accent) }` measures ~2.8:1 there (fails AA), so give
+   this context the same legible on-panel treatment as .footer-col a. */
+.footer-legal a { color: var(--on-panel); text-decoration: underline; text-decoration-color: rgba(233,226,212,0.4); }
+.footer-legal a:hover { text-decoration-color: currentColor; }
+
+.footer-legal .footer-credit {
+  margin-top: 0.45rem;
+  font-size: 0.75rem;
+}
 
 /* =========================================================================
    LEGAL CONTENT  (privacy.html, terms.html)
