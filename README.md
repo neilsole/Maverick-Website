@@ -31,6 +31,13 @@ business card.jpeg   Reference photo of the client's printed business card
                      (dark bg, glow purple monogram, barber pole). Used to
                      source the brand purple; not used on the site itself.
 images/
+  logo.png             The MGC monogram with the white background cut to
+                       transparent, tight-cropped. Used in the header next to
+                       the text wordmark (`.wordmark-mark`). Also rendered
+                       from MGC_logo.jpg - see "Favicon / brand mark" below,
+                       same chroma-key process, just not composited onto a
+                       background since this one needs to float on the header
+                       as-is.
   icons/               favicon-16.png, favicon-32.png, apple-touch-icon.png
                        (180x180), icon-192.png, icon-512.png. Rendered from
                        MGC_logo.jpg - regenerate from that file if it changes,
@@ -77,6 +84,11 @@ simplify to a clean tiny vector mark, so this is a plain ICO + PNG set instead
 - Layout primitives: `.wrap` (max-width + gutter), `.section` (vertical rhythm +
   top hairline), `.frame` (padded card around photos and iframes), `.btn`
   (`.btn-accent` / `.btn-outline` / `.btn-on-dark`, plus `.btn-sm`).
+- Header lockup: `.wordmark` is a flex row now (`images/logo.png` +
+  `.wordmark-text`, the stacked name/sub spans). If you ever go back to a
+  text-only mark, delete the `<img class="wordmark-mark">` and the
+  `.wordmark-text` wrapper span, and `.wordmark` still works as a plain block
+  (the CSS doesn't require the image to be present).
 - Breakpoints in use: 460, 560, 620, 900, 980 px. All grids use
   `minmax(0, 1fr)` to stay blowout-proof. `body` has `overflow-x: hidden` as a
   backstop.

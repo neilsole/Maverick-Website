@@ -275,7 +275,9 @@ p:last-child { margin-bottom: 0; }
   padding-block: 0.6rem;
 }
 
-.wordmark { display: block; line-height: 1; color: var(--ink); min-width: 0; flex: 1 1 auto; overflow: hidden; }
+.wordmark { display: flex; align-items: center; gap: 0.65rem; line-height: 1; color: var(--ink); min-width: 0; flex: 1 1 auto; overflow: hidden; }
+.wordmark-mark { height: 2.5rem; width: auto; flex: none; display: block; }
+.wordmark-text { display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
 .wordmark-name, .wordmark-sub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .wordmark:hover { text-decoration: none; color: var(--ink); }
 .wordmark-name {
@@ -781,6 +783,8 @@ p:last-child { margin-bottom: 0; }
 }
 
 @media (max-width: 460px) {
+  .wordmark { gap: 0.45rem; }
+  .wordmark-mark { height: 2.05rem; }
   .wordmark-name { font-size: 1.3rem; letter-spacing: 0.04em; }
   .wordmark-sub { letter-spacing: 0.24em; font-size: 0.54rem; }
   .menu-name { font-size: 1.2rem; max-width: none; flex: 1 1 auto; }
