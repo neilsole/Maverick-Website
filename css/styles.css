@@ -433,48 +433,53 @@ p:last-child { margin-bottom: 0; }
    SERVICES — typographic menu
    ========================================================================= */
 .menu { list-style: none; margin: 0; padding: 0; }
+/* Each row is a small grid: name | dotted leader | price on the first line,
+   and an optional note on its own second line spanning the full row. The
+   note used to live inside .menu-name, which made that box as wide as the
+   note - so the leader started after the *note's* right edge instead of
+   right after the name. Keeping the note out of the name's column means the
+   leader always starts where the name actually ends. */
 .menu-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(1.5rem, 1fr) auto;
+  column-gap: 0.9rem;
   align-items: baseline;
-  gap: 0.9rem;
   padding: 1.15rem 0;
   border-bottom: 1px solid var(--line);
 }
 .menu-row:first-child { border-top: 1px solid var(--line); }
 
 .menu-name {
+  grid-column: 1;
+  grid-row: 1;
   font-family: "Barlow Condensed", sans-serif;
   font-weight: 600;
   font-size: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 0.02em;
   color: var(--ink);
-  flex: none;
-  max-width: 70%;
-}
-.menu-note {
-  display: block;
-  font-family: "Source Serif 4", serif;
-  font-weight: 400;
-  font-size: 0.92rem;
-  text-transform: none;
-  letter-spacing: 0;
-  color: var(--ink-faint);
-  margin-top: 0.15rem;
 }
 .menu-leader {
-  flex: 1 1 auto;
+  grid-column: 2;
+  grid-row: 1;
   border-bottom: 2px dotted var(--line-strong);
   transform: translateY(-0.3rem);
-  min-width: 1.5rem;
 }
 .menu-price {
+  grid-column: 3;
+  grid-row: 1;
   font-family: "Barlow Condensed", sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
   color: var(--accent);
-  flex: none;
   font-variant-numeric: tabular-nums;
+}
+.menu-note {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  font-size: 0.92rem;
+  color: var(--ink-faint);
+  margin-top: 0.15rem;
 }
 
 /* =========================================================================
@@ -861,9 +866,10 @@ p:last-child { margin-bottom: 0; }
   .wordmark-mark { height: 1.6rem; }
   .wordmark-name { font-size: 1.3rem; letter-spacing: 0.04em; }
   .wordmark-sub { letter-spacing: 0.24em; font-size: 0.54rem; }
-  .menu-name { font-size: 1.2rem; max-width: none; flex: 1 1 auto; }
+  .menu-row { grid-template-columns: minmax(0, 1fr) auto; }
+  .menu-name { font-size: 1.2rem; }
   .menu-leader { display: none; }
-  .menu-price { font-size: 1.2rem; padding-left: 0.75rem; }
+  .menu-price { grid-column: 2; font-size: 1.2rem; }
   .booking-frame iframe { height: 820px; }
   .booking-gate { height: 320px; }
 }
