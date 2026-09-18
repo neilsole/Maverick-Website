@@ -555,6 +555,51 @@ p:last-child { margin-bottom: 0; }
   border: 0;
   background: var(--card);
 }
+/* .frame > iframe { display: block } above outranks the [hidden] attribute's
+   own display:none (both are one-class specificity, but this one also
+   matches the element type) - without this the gated iframe would render
+   at full height, invisible-looking but still taking up the page. */
+.booking-frame iframe[hidden] { display: none; }
+
+/* Shown until the visitor taps in. Without this, the live scheduler is
+   tall enough that a swipe meant to scroll the page instead scrolls the
+   widget's own content - on an iPhone that traps people right at "Book
+   Your Appointment" and they never reach Hours/Visit below. A static,
+   non-scrolling placeholder means normal page scrolling just glides past
+   it until someone deliberately opts in. Sized to its own content rather
+   than matching the iframe's height, so it reads as a deliberate card
+   instead of a mostly-empty box; the box is allowed to grow once the
+   real widget replaces it. */
+.booking-gate {
+  width: 100%;
+  height: 380px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  text-align: center;
+  background: var(--card);
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 0.16s var(--ease);
+}
+.booking-gate:hover, .booking-gate:focus-visible { background: var(--paper-alt); }
+.booking-gate-icon { color: var(--accent); }
+.booking-gate-title {
+  font-family: "Barlow Condensed", sans-serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+.booking-gate-note {
+  font-size: 0.9rem;
+  color: var(--ink-faint);
+  margin: 0;
+}
+
 .booking-notes {
   margin-top: 1rem;
   font-size: 0.95rem;
@@ -820,6 +865,7 @@ p:last-child { margin-bottom: 0; }
   .menu-leader { display: none; }
   .menu-price { font-size: 1.2rem; padding-left: 0.75rem; }
   .booking-frame iframe { height: 820px; }
+  .booking-gate { height: 320px; }
 }
 
 /* Respect reduced-motion preferences */

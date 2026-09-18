@@ -137,7 +137,7 @@ order.
 
 Booking is handled by DaySmart and shown right on the page. If DaySmart ever
 gives you a new booking web address, open `index.html` and search for
-`book.daysmart.com`. Replace the address in all three places you find it. Then
+`book.daysmart.com`. Replace the address in all four places you find it. Then
 you are done.
 
 ## 6. Legal pages (Privacy Policy & Terms)

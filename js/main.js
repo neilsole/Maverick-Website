@@ -5,6 +5,7 @@
      2. Header hairline on scroll
      3. Highlight today's row in the hours table
      4. Current year in the footer
+     5. Load the booking widget only after a tap (see comment below)
    ========================================================================= */
 (function () {
   "use strict";
@@ -70,4 +71,28 @@
   /* ---- 4. Footer year ------------------------------------------- */
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+  /* ---- 5. Booking widget: load on tap, not on scroll-by ---------
+     The live scheduler is tall and scrolls internally. Loading it
+     automatically meant a swipe on an iPhone that was just meant to keep
+     scrolling the page instead scrolled the widget's own content, trapping
+     people right at the Book section. Requiring one tap/click/Enter first
+     means the page scrolls freely until someone actually opts in. */
+  var bookingGate = document.getElementById("bookingGate");
+  var bookingFrame = document.getElementById("bookingIframe");
+  if (bookingGate && bookingFrame) {
+    var activateBooking = function () {
+      if (bookingFrame.src) return;
+      bookingFrame.src = bookingFrame.getAttribute("data-src");
+      bookingFrame.hidden = false;
+      bookingGate.remove();
+    };
+    bookingGate.addEventListener("click", activateBooking);
+    bookingGate.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        activateBooking();
+      }
+    });
+  }
 })();

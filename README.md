@@ -127,8 +127,9 @@ simplify to a clean tiny vector mark, so this is a plain ICO + PNG set instead
 
 ## Booking
 
-Embed URL (in `index.html` x3: the `<iframe src>`, the "open in a new tab"
-fallback link, and the JSON-LD `potentialAction` `urlTemplate`):
+Embed URL (in `index.html` x4: the `#bookingIframe`'s `data-src`, the
+`<noscript>` fallback iframe's `src`, the "open in a new tab" link, and the
+JSON-LD `potentialAction` `urlTemplate`):
 
 ```
 https://book.daysmart.com/booking/service?DSID=DC-2291947
@@ -137,6 +138,34 @@ https://book.daysmart.com/booking/service?DSID=DC-2291947
 Do **not** use `maverickmgc.myonlineappointment.com`. It redirects through a
 session check, needs third-party cookies (fails in an iframe on Safari/iOS), and
 shows a "you are leaving this site" prompt. `book.daysmart.com` embeds cleanly.
+
+### Tap-to-load gate
+
+`#bookingIframe` starts with `hidden` and no `src` - only `data-src`. A visible
+`#bookingGate` card ("Tap to start booking") sits in front of it; `main.js`
+swaps `data-src` into `src`, un-hides the iframe, and removes the gate on
+click/Enter/Space.
+
+This exists because the live scheduler is taller than its box at some steps
+and scrolls internally. With the iframe live from page load, a swipe on an
+iPhone that was meant to keep scrolling the page instead scrolled the
+widget's own content - people got stuck at "Book Your Appointment" and never
+reached Hours/Visit below. Gating it means the page scrolls normally until
+someone deliberately opts in; only then is landing inside the widget's own
+scroll expected.
+
+Two things to know if you touch this:
+- `.frame > iframe { display: block }` (in the framed-media rules near the
+  top of `styles.css`) has higher specificity than the `[hidden]` attribute's
+  own `display: none`, so there's an explicit
+  `.booking-frame iframe[hidden] { display: none; }` rule to win that fight.
+  Delete it and the "hidden" iframe silently renders at full height anyway.
+- `.booking-gate`'s height (380px / 320px on small phones) is independent of
+  `.booking-frame iframe`'s (900px / 820px) on purpose - it's sized to its
+  own short message, not to match the widget it's about to be replaced by.
+  A `<noscript>` block right after the iframe covers the no-JS case with a
+  plain always-on embed (accepting the scroll-trap tradeoff there, since the
+  alternative is booking not working at all).
 
 ## Local preview and screenshots
 
